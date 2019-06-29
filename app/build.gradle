@@ -68,4 +68,7 @@ dependencies {
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.version_navigation"
     implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.version_navigation"
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$rootProject.version_stetho"
 }

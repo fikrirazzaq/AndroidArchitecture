@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.PostsListFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/postsCoordinatorLayout"
         android:layout_width="match_parent"

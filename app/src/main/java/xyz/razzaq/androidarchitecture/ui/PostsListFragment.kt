@@ -2,22 +2,43 @@ package xyz.razzaq.androidarchitecture.ui
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import xyz.razzaq.androidarchitecture.PostsListFragmentDirections
 import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentPostsListBinding
 import xyz.razzaq.androidarchitecture.databinding.ListItemPostBinding
 import xyz.razzaq.androidarchitecture.domain.Post
+import xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel
 
 
 class PostsListFragment : Fragment() {
+
+    private val viewModel: PostsViewModel by lazy {
+        val activity = requireNotNull(this.activity)
+        ViewModelProviders.of(this, PostsViewModel.Factory(activity.application))
+            .get(PostsViewModel::class.java)
+    }
+
+    private var viewModelAdapter: PostAdapter? = null
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.allPost.observe(viewLifecycleOwner, Observer<List<Post>> {
+            it?.apply {
+                viewModelAdapter?.posts = it
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +48,17 @@ class PostsListFragment : Fragment() {
         val binding: FragmentPostsListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_posts_list, container, false
         )
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        viewModelAdapter = PostAdapter()
+
+        binding.root.findViewById<RecyclerView>(R.id.rcvPosts).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewModelAdapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
 
         setClickListenerCreatePost(binding)
 
@@ -70,7 +102,7 @@ class PostAdapter() : RecyclerView.Adapter<PostViewHolder>() {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            //Bind post item
+            it.post = posts[position]
         }
     }
 
