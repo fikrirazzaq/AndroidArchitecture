@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidArchitecture</string>
+    <string name="app_name">Lorem Ipsum</string>
 
     <string name="user_id_format">User %s</string>
     <string name="post_id_format">#%s</string>

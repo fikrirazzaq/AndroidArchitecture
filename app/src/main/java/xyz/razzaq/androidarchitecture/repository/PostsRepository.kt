@@ -5,6 +5,7 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import timber.log.Timber
 import xyz.razzaq.androidarchitecture.data.source.database.DatabasePost
 import xyz.razzaq.androidarchitecture.data.source.database.PostsDatabase
 import xyz.razzaq.androidarchitecture.data.source.database.asDomainModel
@@ -22,15 +23,19 @@ class PostsRepository(private val database: PostsDatabase) {
 
     suspend fun refreshPosts() {
         withContext(Dispatchers.IO) {
-            val allPost = Network.posts.getAllPostsAsync().await()
-            database.postDao.insertAll(*allPost.map {
-                DatabasePost(
-                    id = it.id,
-                    title = it.title,
-                    body = it.body,
-                    userId = it.userId
-                )
-            }.toTypedArray())
+            try {
+                val allPost = Network.posts.getAllPostsAsync().await()
+                database.postDao.insertAll(*allPost.map {
+                    DatabasePost(
+                        id = it.id,
+                        title = it.title,
+                        body = it.body,
+                        userId = it.userId
+                    )
+                }.toTypedArray())
+            } catch (exception: Exception) {
+                Timber.e("Error ${exception.localizedMessage}")
+            }
         }
     }
 

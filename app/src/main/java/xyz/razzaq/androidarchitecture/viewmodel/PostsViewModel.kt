@@ -2,6 +2,7 @@ package xyz.razzaq.androidarchitecture.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
@@ -12,6 +13,12 @@ import timber.log.Timber
 import xyz.razzaq.androidarchitecture.data.source.database.getDatabase
 import xyz.razzaq.androidarchitecture.repository.PostsRepository
 
+
+interface PostsView {
+    fun showLoading()
+    fun hideLoading()
+}
+
 class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val viewModelJob = SupervisorJob()
@@ -20,6 +27,9 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
     private val postsRepository = PostsRepository(database)
+
+    var isLoaded = MutableLiveData<Boolean>()
+    var resultMessage = MutableLiveData<String>()
 
     init {
         viewModelScope.launch {
@@ -33,8 +43,12 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val post = postsRepository.addPost(title, body, userId)
             if (post.isSuccessful) {
-                Timber.d("Success ${post.body()!!.title.toString()}")
+                loadFinished()
+                resultMessage("Successfully posted.")
+                Timber.d("Success ${post.body()!!.title}")
             } else {
+                loadFinished()
+                resultMessage("Failed to post, please try again.")
                 Timber.d("Error ${post.code()}")
             }
         }
@@ -43,6 +57,14 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    private fun loadFinished() {
+        isLoaded.value = true
+    }
+
+    private fun resultMessage(message: String) {
+        resultMessage.value = message
     }
 
     @Suppress("UNCHECKED_CAST")
