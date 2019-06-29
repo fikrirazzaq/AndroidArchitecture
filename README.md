@@ -1,4 +1,4 @@
-# Calcio
+# Android Architecture
 
 This project is built with kotlin. All data are collected from https://jsonplaceholder.typicode.com/.
 
