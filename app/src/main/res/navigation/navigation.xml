@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/postsListFragment">
+
+    <fragment
+        android:id="@+id/postsListFragment"
+        android:name="xyz.razzaq.androidarchitecture.PostsListFragment"
+        android:label="Posts"
+        tools:layout="@layout/fragment_posts_list">
+        <action
+            android:id="@+id/action_postsListFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="xyz.razzaq.androidarchitecture.CreatePostFragment"
+        android:label="Create New Post"
+        tools:layout="@layout/fragment_create_post" />
+</navigation>

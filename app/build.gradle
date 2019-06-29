@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.version_kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.version_kotlin"
 
     // Support libs
     implementation "androidx.appcompat:appcompat:$rootProject.version_appcompat"
@@ -56,6 +56,7 @@ dependencies {
 
     // Room database
     implementation "androidx.room:room-runtime:$rootProject.version_room"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$rootProject.version_room"
 
     // WorkManager
