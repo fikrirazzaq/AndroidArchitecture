@@ -1,4 +1,4 @@
-package xyz.razzaq.androidarchitecture
+package xyz.razzaq.androidarchitecture.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.ActivityPostsBinding
 
 class PostsActivity : AppCompatActivity() {
@@ -14,7 +15,9 @@ class PostsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityPostsBinding>(this, R.layout.activity_posts)
+        DataBindingUtil.setContentView<ActivityPostsBinding>(this,
+            R.layout.activity_posts
+        )
 
         val navController = this.findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)

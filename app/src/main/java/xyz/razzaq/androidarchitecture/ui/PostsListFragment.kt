@@ -1,4 +1,4 @@
-package xyz.razzaq.androidarchitecture
+package xyz.razzaq.androidarchitecture.ui
 
 
 import android.os.Bundle
@@ -10,9 +10,11 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import xyz.razzaq.androidarchitecture.PostsListFragmentDirections
+import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentPostsListBinding
 import xyz.razzaq.androidarchitecture.databinding.ListItemPostBinding
+import xyz.razzaq.androidarchitecture.domain.Post
 
 
 class PostsListFragment : Fragment() {

@@ -1,10 +1,11 @@
-package xyz.razzaq.androidarchitecture
+package xyz.razzaq.androidarchitecture.ui
 
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentCreatePostBinding
 
 class CreatePostFragment : Fragment() {
