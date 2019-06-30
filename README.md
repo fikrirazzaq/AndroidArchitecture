@@ -3,7 +3,9 @@
 This project is built with kotlin. All data are collected from https://jsonplaceholder.typicode.com/.
 
 I am implementing modern architecture for Android App. This application contains features to retrieve all posts data and send new post. I'm using [Kotlin Udacity]
-and [rifqimfahmi]'s repository as reference. There are still room for improvements, so I'm open for any feedback. Sharing with one another helps us all grow and learn.
+and [rifqimfahmi]'s repository as reference.
+I am using [git-karma] for commit message conventions.
+There are still room for improvements, so I'm open for any feedback. Sharing with one another helps us all grow and learn. ✌️
 
 ### Api Service
 ```
@@ -46,4 +48,5 @@ fun addPostAsync(@Body body: PostBody): Deferred<Response<NetworkPost>>
 [Navigation]: <https://developer.android.com/guide/navigation>
 [Timber]: <https://github.com/JakeWharton/timber>
 [Stetho]: <https://github.com/facebook/stetho>
+[git-karma]: <http://karma-runner.github.io/4.0/dev/git-commit-msg.html>
 
