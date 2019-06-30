@@ -7,7 +7,9 @@
         <variable
             name="post"
             type="xyz.razzaq.androidarchitecture.domain.Post" />
-
+        <variable
+            name="postCallback"
+            type="xyz.razzaq.androidarchitecture.ui.posts_list.PostClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,5 +66,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPostTitle"
             tools:text="Bla bla bla bla bla bla bla bla bla bla blab lab alb alb la" />
+
+        <View
+            android:id="@+id/clickableOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{() -> postCallback.onClick(post)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

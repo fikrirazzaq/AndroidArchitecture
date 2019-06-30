@@ -1,4 +1,4 @@
-package xyz.razzaq.androidarchitecture.ui
+package xyz.razzaq.androidarchitecture.ui.posts_list
 
 
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentPostsListBinding
 import xyz.razzaq.androidarchitecture.databinding.ListItemPostBinding
 import xyz.razzaq.androidarchitecture.domain.Post
+import xyz.razzaq.androidarchitecture.ui.PostsListFragmentDirections
 import xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel
 
 
@@ -52,7 +54,14 @@ class PostsListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModelAdapter = PostAdapter()
+        viewModelAdapter =
+            PostAdapter(PostClick {
+                findNavController().navigate(
+                    PostsListFragmentDirections.actionPostsListFragmentToPostDetailFragment(
+                        it
+                    )
+                )
+            })
 
         binding.root.findViewById<RecyclerView>(R.id.rcvPosts).apply {
             layoutManager = LinearLayoutManager(context)
@@ -79,7 +88,7 @@ class PostViewHolder(val viewDataBinding: ListItemPostBinding) : RecyclerView.Vi
     }
 }
 
-class PostAdapter() : RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter(private val callback: PostClick) : RecyclerView.Adapter<PostViewHolder>() {
 
     var posts: List<Post> = emptyList()
         set(value) {
@@ -103,7 +112,11 @@ class PostAdapter() : RecyclerView.Adapter<PostViewHolder>() {
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.post = posts[position]
+            it.postCallback = callback
         }
     }
+}
 
+class PostClick(val block: (Post) -> Unit) {
+    fun onClick(post: Post) = block(post)
 }

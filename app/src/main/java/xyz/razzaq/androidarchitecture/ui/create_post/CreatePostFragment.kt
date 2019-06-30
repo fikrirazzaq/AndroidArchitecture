@@ -1,21 +1,27 @@
-package xyz.razzaq.androidarchitecture.ui
+package xyz.razzaq.androidarchitecture.ui.create_post
 
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentCreatePostBinding
 import xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel
 
+
 class CreatePostFragment : Fragment() {
 
     private lateinit var binding: FragmentCreatePostBinding
+    private lateinit var toast: Toast
 
     private val viewModel: PostsViewModel by lazy {
         val activity = requireNotNull(this.activity)
@@ -37,6 +43,9 @@ class CreatePostFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        @SuppressLint("ShowToast")
+        toast = Toast.makeText(activity, null, Toast.LENGTH_SHORT)
+
         return binding.root
     }
 
@@ -54,9 +63,13 @@ class CreatePostFragment : Fragment() {
         resultMessage.observe(this, Observer {
             if (it != null) {
                 if (it.toLowerCase().contains("success")) {
-                    Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                    toast.setText(it)
+                    toast.show()
+                    hideSoftKeyboard()
+                    findNavController().navigateUp()
                 } else if (it.toLowerCase().contains("failed")) {
-                    Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                    toast.setText(it)
+                    toast.show()
                 }
             }
         })
@@ -76,9 +89,10 @@ class CreatePostFragment : Fragment() {
 
     private fun sendPost() {
         if (binding.edtTitle.text!!.isEmpty() && binding.edtBody.text!!.isEmpty()) {
-            Toast.makeText(activity, "Post cannot be empty.", Toast.LENGTH_SHORT).show()
+            toast.setText("Post cannot be empty.")
+            toast.show()
         } else {
-            binding.progressPosting.visibility = View.GONE
+            binding.progressPosting.visibility = View.VISIBLE
             viewModel.addPost(
                 binding.edtTitle.toString(),
                 binding.edtBody.toString(),
@@ -86,4 +100,10 @@ class CreatePostFragment : Fragment() {
             )
         }
     }
+
+    fun hideSoftKeyboard() {
+        val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, 0)
+    }
+
 }

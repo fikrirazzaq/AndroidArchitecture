@@ -10,6 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 import xyz.razzaq.androidarchitecture.domain.PostBody
 
 
@@ -19,6 +20,9 @@ interface PostsService {
 
     @POST("posts")
     fun addPostAsync(@Body body: PostBody): Deferred<Response<NetworkPost>>
+
+    @GET("comments")
+    fun getCommentsByPostIdAsync(@Query("postId") postId: String): Deferred<List<NetworkComment>>
 }
 
 private val moshi = Moshi.Builder()

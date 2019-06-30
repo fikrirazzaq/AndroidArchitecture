@@ -11,10 +11,16 @@ interface PostDao {
     fun getPosts(): LiveData<List<DatabasePost>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg posts: DatabasePost)
+    fun insertAllPosts(vararg posts: DatabasePost)
+
+    @Query("select * from databasecomment where postId = :postId")
+    fun getCommentsByPostId(postId: Int): LiveData<List<DatabaseComment>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllComments(vararg comments: DatabaseComment)
 }
 
-@Database(entities = [DatabasePost::class], version = 322, exportSchema = false)
+@Database(entities = [DatabasePost::class, DatabaseComment::class], version = 322, exportSchema = false)
 abstract class PostsDatabase : RoomDatabase() {
     abstract val postDao: PostDao
 }

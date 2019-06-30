@@ -7,16 +7,28 @@
 
     <fragment
         android:id="@+id/postsListFragment"
-        android:name="xyz.razzaq.androidarchitecture.ui.PostsListFragment"
+        android:name="xyz.razzaq.androidarchitecture.ui.posts_list.PostsListFragment"
         android:label="Posts"
         tools:layout="@layout/fragment_posts_list">
         <action
             android:id="@+id/action_postsListFragment_to_createPostFragment"
             app:destination="@id/createPostFragment" />
+        <action
+            android:id="@+id/action_postsListFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/createPostFragment"
-        android:name="xyz.razzaq.androidarchitecture.ui.CreatePostFragment"
+        android:name="xyz.razzaq.androidarchitecture.ui.create_post.CreatePostFragment"
         android:label="Create New Post"
         tools:layout="@layout/fragment_create_post" />
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="xyz.razzaq.androidarchitecture.ui.post_detail.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+            android:name="post"
+            app:argType="xyz.razzaq.androidarchitecture.domain.Post" />
+    </fragment>
 </navigation>

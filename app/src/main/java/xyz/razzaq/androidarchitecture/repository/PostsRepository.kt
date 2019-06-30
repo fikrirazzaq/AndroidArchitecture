@@ -4,28 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import timber.log.Timber
-import xyz.razzaq.androidarchitecture.data.source.database.DatabasePost
-import xyz.razzaq.androidarchitecture.data.source.database.PostsDatabase
-import xyz.razzaq.androidarchitecture.data.source.database.asDomainModel
+import xyz.razzaq.androidarchitecture.data.source.database.*
 import xyz.razzaq.androidarchitecture.data.source.network.Network
-import xyz.razzaq.androidarchitecture.data.source.network.NetworkPost
+import xyz.razzaq.androidarchitecture.domain.Comment
 import xyz.razzaq.androidarchitecture.domain.Post
 import xyz.razzaq.androidarchitecture.domain.PostBody
 
 class PostsRepository(private val database: PostsDatabase) {
 
+    // All Posts
     val posts: LiveData<List<Post>> =
         Transformations.map(database.postDao.getPosts()) {
-            it.asDomainModel()
+            it.asDomainPostModel()
         }
 
     suspend fun refreshPosts() {
         withContext(Dispatchers.IO) {
             try {
                 val allPost = Network.posts.getAllPostsAsync().await()
-                database.postDao.insertAll(*allPost.map {
+                database.postDao.insertAllPosts(*allPost.map {
                     DatabasePost(
                         id = it.id,
                         title = it.title,
@@ -39,10 +37,45 @@ class PostsRepository(private val database: PostsDatabase) {
         }
     }
 
-    suspend fun addPost(title: String, body: String, userId: Int): Response<NetworkPost> {
-        return withContext(Dispatchers.IO) {
-            return@withContext Network.posts.addPostAsync(PostBody(title, body, userId)).await()
+    // Create Post
+    var responseCode: String? = null
+
+    suspend fun addPost(title: String, body: String, userId: Int) {
+        withContext(Dispatchers.IO) {
+            try {
+                val addPost = Network.posts.addPostAsync(PostBody(title, body, userId)).await()
+                responseCode = addPost.code().toString()
+            } catch (exception: Exception) {
+                Timber.e("Error ${exception.localizedMessage}")
+                responseCode = "400"
+            }
         }
     }
 
+    // All Comments by postId
+
+    fun comments(postId: Int): LiveData<List<Comment>> {
+        return Transformations.map(database.postDao.getCommentsByPostId(postId)) {
+            it.asDomainCommentModel()
+        }
+    }
+
+    suspend fun getCommentsByPostId(postId: Int) {
+        withContext(Dispatchers.IO) {
+            try {
+                val comments = Network.posts.getCommentsByPostIdAsync(postId.toString()).await()
+                database.postDao.insertAllComments(*comments.map {
+                    DatabaseComment(
+                        id = it.id,
+                        name = it.name,
+                        email = it.email,
+                        body = it.body,
+                        postId = it.postId
+                    )
+                }.toTypedArray())
+            } catch (exception: Exception) {
+                Timber.e("Error ${exception.localizedMessage}")
+            }
+        }
+    }
 }

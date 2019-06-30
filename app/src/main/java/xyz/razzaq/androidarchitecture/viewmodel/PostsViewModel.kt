@@ -1,23 +1,15 @@
 package xyz.razzaq.androidarchitecture.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import xyz.razzaq.androidarchitecture.data.source.database.getDatabase
+import xyz.razzaq.androidarchitecture.domain.Comment
 import xyz.razzaq.androidarchitecture.repository.PostsRepository
-
-
-interface PostsView {
-    fun showLoading()
-    fun hideLoading()
-}
 
 class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -41,17 +33,25 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addPost(title: String, body: String, userId: Int) {
         viewModelScope.launch {
-            val post = postsRepository.addPost(title, body, userId)
-            if (post.isSuccessful) {
+            postsRepository.addPost(title, body, userId)
+            if (postsRepository.responseCode != "400") {
                 loadFinished()
                 resultMessage("Successfully posted.")
-                Timber.d("Success ${post.body()!!.title}")
+                Timber.d("Success ${postsRepository.responseCode}")
             } else {
                 loadFinished()
                 resultMessage("Failed to post, please try again.")
-                Timber.d("Error ${post.code()}")
+                Timber.d("Error ${postsRepository.responseCode}")
             }
         }
+    }
+
+    fun getComments(postId: Int): LiveData<List<Comment>> {
+        viewModelScope.launch {
+            postsRepository.getCommentsByPostId(postId)
+        }
+
+        return postsRepository.comments(postId)
     }
 
     override fun onCleared() {
