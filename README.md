@@ -2,7 +2,7 @@
 
 This project is built with kotlin. All data are collected from https://jsonplaceholder.typicode.com/.
 
-I am implementing modern architecture for Android App. This application contains features to retrieve all posts data and send new post. I'm using [Kotlin Udacity]
+I am implementing modern architecture for Android App. This application contains features to retrieve all posts data, view post detail & comments and send new post. I'm using [Kotlin Udacity]
 and [rifqimfahmi]'s repository as reference.
 I am using [git-karma] for commit message conventions.
 There are still room for improvements, so I'm open for any feedback. Sharing with one another helps us all grow and learn. ✌️
@@ -14,7 +14,15 @@ fun getAllPostsAsync(): Deferred<List<NetworkPost>>
 
 @POST("posts")
 fun addPostAsync(@Body body: PostBody): Deferred<Response<NetworkPost>>
+
+@GET("comments")
+    fun getCommentsByPostIdAsync(@Query("postId") postId: String): Deferred<List<NetworkComment>>
 ```
+### Navigation
+
+The navigation between fragments is implemented using [Navigation Component]. Image below shows a visual representation of a navigation graph that contains two actions (both arrows) to different destinations (***postDetailFragment*** and ***createPostFragment***).
+
+<img height="480px" src="navigation.PNG">
 
 ## Libs Dependencies
 * [Retrofit] - HTTP client
@@ -46,6 +54,7 @@ fun addPostAsync(@Body body: PostBody): Deferred<Response<NetworkPost>>
 [Coroutines]: <https://developer.android.com/topic/libraries/architecture/coroutines>
 [Work Manager]: <https://developer.android.com/topic/libraries/architecture/workmanager>
 [Navigation]: <https://developer.android.com/guide/navigation>
+[Navigation Component]: <https://developer.android.com/guide/navigation>
 [Timber]: <https://github.com/JakeWharton/timber>
 [Stetho]: <https://github.com/facebook/stetho>
 [git-karma]: <http://karma-runner.github.io/4.0/dev/git-commit-msg.html>
