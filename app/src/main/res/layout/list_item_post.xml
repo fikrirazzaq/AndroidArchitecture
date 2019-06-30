@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="post"
             type="xyz.razzaq.androidarchitecture.domain.Post" />
+
         <variable
             name="postCallback"
             type="xyz.razzaq.androidarchitecture.ui.posts_list.PostClick" />
@@ -14,16 +16,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvUserId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_page_margin"
+            android:layout_marginTop="@dimen/dimen_page_margin"
+            android:layout_marginEnd="@dimen/dimen_page_margin"
             android:text="@{@string/user_id_format(post.userId)}"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="12sp"
+            android:textSize="@dimen/small_text_size"
             app:layout_constraintEnd_toStartOf="@+id/tvPostId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,9 +37,12 @@
             android:id="@+id/tvPostId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_page_margin"
+            android:layout_marginEnd="@dimen/dimen_page_margin"
+            android:layout_marginRight="@dimen/dimen_page_margin"
             android:text="@{@string/post_id_format(post.id)}"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="12sp"
+            android:textSize="@dimen/small_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="#2" />
@@ -44,11 +51,11 @@
             android:id="@+id/tvPostTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/dimen_page_margin"
+            android:layout_marginEnd="@dimen/dimen_page_margin"
             android:text="@{post.title}"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="16sp"
+            android:textSize="@dimen/large_text_size"
             app:layout_constraintEnd_toStartOf="@+id/tvPostId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserId"
@@ -58,10 +65,12 @@
             android:id="@+id/tvPostBody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/dimen_page_margin"
+            android:layout_marginEnd="@dimen/dimen_page_margin"
+            android:layout_marginBottom="@dimen/dimen_page_margin"
             android:text="@{post.body}"
             android:textColor="@color/colorSecondaryText"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvPostId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPostTitle"

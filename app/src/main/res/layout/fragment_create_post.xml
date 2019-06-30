@@ -6,17 +6,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="@dimen/dimen_page_margin"
+        android:paddingTop="@dimen/dimen_page_margin"
+        android:paddingEnd="@dimen/dimen_page_margin"
         tools:context=".ui.create_post.CreatePostFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="Title"
+            android:layout_marginBottom="@dimen/dimen_page_margin"
+            android:hint="@string/label_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,7 +32,7 @@
             android:id="@+id/tilBody"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:hint="Body"
+            android:hint="@string/label_body"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

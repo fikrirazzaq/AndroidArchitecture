@@ -21,7 +21,7 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
     private val postsRepository = PostsRepository(database)
 
     var isLoaded = MutableLiveData<Boolean>()
-    var resultMessage = MutableLiveData<String>()
+    var resultMessage = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
@@ -36,11 +36,11 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
             postsRepository.addPost(title, body, userId)
             if (postsRepository.responseCode != "400") {
                 loadFinished()
-                resultMessage("Successfully posted.")
+                resultMessage(true)
                 Timber.d("Success ${postsRepository.responseCode}")
             } else {
                 loadFinished()
-                resultMessage("Failed to post, please try again.")
+                resultMessage(false)
                 Timber.d("Error ${postsRepository.responseCode}")
             }
         }
@@ -63,7 +63,7 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
         isLoaded.value = true
     }
 
-    private fun resultMessage(message: String) {
+    private fun resultMessage(message: Boolean) {
         resultMessage.value = message
     }
 

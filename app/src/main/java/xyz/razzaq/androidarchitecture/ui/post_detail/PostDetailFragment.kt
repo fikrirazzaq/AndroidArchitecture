@@ -17,7 +17,6 @@ import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentPostDetailBinding
 import xyz.razzaq.androidarchitecture.databinding.ListItemCommentBinding
 import xyz.razzaq.androidarchitecture.domain.Comment
-import xyz.razzaq.androidarchitecture.ui.PostDetailFragmentArgs
 import xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel
 
 class PostDetailFragment : Fragment() {

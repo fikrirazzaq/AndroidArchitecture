@@ -3,7 +3,11 @@
 
     <string name="user_id_format">User %s</string>
     <string name="post_id_format">#%s</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_title">Title</string>
+    <string name="label_body">Body</string>
+    <string name="label_replies">Replies</string>
+    <string name="message_post_cannot_empty">Post cannot be empty.</string>
+    <string name="message_post_success">Successfully posted.</string>
+    <string name="message_post_failed">Failed to post, please try again.</string>
+    <string name="menu_send_title">Send</string>
 </resources>

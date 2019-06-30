@@ -59,16 +59,16 @@ class CreatePostFragment : Fragment() {
         })
     }
 
-    private fun observeResultMessage(resultMessage: MutableLiveData<String>) {
+    private fun observeResultMessage(resultMessage: MutableLiveData<Boolean>) {
         resultMessage.observe(this, Observer {
             if (it != null) {
-                if (it.toLowerCase().contains("success")) {
-                    toast.setText(it)
+                if (it) {
+                    toast.setText(getString(R.string.message_post_success))
                     toast.show()
                     hideSoftKeyboard()
                     findNavController().navigateUp()
-                } else if (it.toLowerCase().contains("failed")) {
-                    toast.setText(it)
+                } else {
+                    toast.setText(getString(R.string.message_post_failed))
                     toast.show()
                 }
             }
@@ -89,7 +89,7 @@ class CreatePostFragment : Fragment() {
 
     private fun sendPost() {
         if (binding.edtTitle.text!!.isEmpty() && binding.edtBody.text!!.isEmpty()) {
-            toast.setText("Post cannot be empty.")
+            toast.setText(getString(R.string.message_post_cannot_empty))
             toast.show()
         } else {
             binding.progressPosting.visibility = View.VISIBLE
@@ -101,7 +101,7 @@ class CreatePostFragment : Fragment() {
         }
     }
 
-    fun hideSoftKeyboard() {
+    private fun hideSoftKeyboard() {
         val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, 0)
     }

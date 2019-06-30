@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/dimen_page_margin">
 
         <ImageView
             android:id="@+id/imgAccount"
@@ -27,8 +27,8 @@
             android:id="@+id/tvUserName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="@dimen/dimen_page_margin_half"
+            android:layout_marginLeft="@dimen/dimen_page_margin_half"
             android:text="@{comment.name}"
             android:textColor="@color/colorPrimaryText"
             app:layout_constraintBottom_toTopOf="@+id/tvUserEmail"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/post_id_format(comment.id)}"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="12sp"
+            android:textSize="@dimen/small_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="#2" />
@@ -52,14 +52,14 @@
             android:id="@+id/tvUserEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/dimen_page_margin_half"
+            android:layout_marginLeft="@dimen/dimen_page_margin_half"
+            android:layout_marginEnd="@dimen/dimen_page_margin_half"
+            android:layout_marginRight="@dimen/dimen_page_margin_half"
+            android:layout_marginBottom="@dimen/dimen_page_margin_half"
             android:text="@{comment.email}"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="12sp"
+            android:textSize="@dimen/small_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/imgAccount"
             app:layout_constraintEnd_toStartOf="@+id/tvCommentId"
             app:layout_constraintStart_toEndOf="@+id/imgAccount"
@@ -70,7 +70,7 @@
             android:id="@+id/tvCommentBody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dimen_page_margin_half"
             android:text="@{comment.body}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

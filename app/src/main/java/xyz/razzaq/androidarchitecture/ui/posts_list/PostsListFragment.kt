@@ -19,7 +19,6 @@ import xyz.razzaq.androidarchitecture.R
 import xyz.razzaq.androidarchitecture.databinding.FragmentPostsListBinding
 import xyz.razzaq.androidarchitecture.databinding.ListItemPostBinding
 import xyz.razzaq.androidarchitecture.domain.Post
-import xyz.razzaq.androidarchitecture.ui.PostsListFragmentDirections
 import xyz.razzaq.androidarchitecture.viewmodel.PostsViewModel
 
 
