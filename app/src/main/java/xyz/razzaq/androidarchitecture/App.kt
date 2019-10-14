@@ -11,7 +11,7 @@ import timber.log.Timber
 import xyz.razzaq.androidarchitecture.work.RefreshDataWork
 import java.util.concurrent.TimeUnit
 
-class Appp : Application() {
+class App : Application() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
@@ -46,8 +46,10 @@ class Appp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
-        Stetho.initializeWithDefaults(this);
+        if(BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+            Stetho.initializeWithDefaults(this)
+        }
         delayedInit()
     }
 
